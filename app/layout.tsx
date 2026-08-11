@@ -19,7 +19,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        <link rel="shortcut icon" href="/logo.ng" type="image/x-icon" />
+        <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
       </head>
       <body className="min-h-full w-screen flex flex-col">
         <Header />
