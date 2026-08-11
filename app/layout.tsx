@@ -1,14 +1,16 @@
-import type { Metadata } from "next";
+"use client";
+
 import "./globals.css";
 import Header from "@/components/general/Header";
 import Footer from "@/components/general/Footer";
-
-export const metadata: Metadata = {
-  title: "IruHost",
-  description: "IruHost Affiliate Program",
-};
+import SideNav from "@/components/user/SideNav";
+import { usePathname } from "next/navigation";
+import DashHeader from "@/components/user/DashHeader";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+
+  const pathname = usePathname();
+
   return (
     <html lang="en" className={`h-full antialiased`}>
       <head>
@@ -19,11 +21,42 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"
         />
-        <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
+        <link rel="icon" href="/logo.png" type="image/x-icon" />
       </head>
       <body className="min-h-full w-screen flex flex-col">
         <Header />
-        {children}
+        <div className={`w-full flex bg-accent
+            ${pathname === "/" ? "h-max" : "h-screen overflow-hidden"}
+          `}>
+          <div className={`w-2/10 h-screen px-10 py-10 border-r border-grey
+            ${pathname === "/" ? "hidden" : ""}
+            ${pathname === "/login" ? "hidden" : ""}
+            ${pathname === "/register" ? "hidden" : ""}
+            ${pathname === "/forget-password" ? "hidden" : ""}
+            `}>
+            <SideNav />
+          </div>
+          <div className={`h-screen
+            ${pathname === "/" ? "w-full" : "w-8/10"}
+            ${pathname === "/login" ? "w-full" : "w-8/10"}
+            ${pathname === "/register" ? "w-full" : "w-8/10"}
+            ${pathname === "/forget-password" ? "w-full" : "w-8/10"}
+            `}>
+            <div className={`w-full h-20 border-b border-grey px-5
+              ${pathname === "/" ? "hidden" : ""}
+              ${pathname === "/login" ? "hidden" : ""}
+              ${pathname === "/register" ? "hidden" : ""}
+              ${pathname === "/forget-password" ? "hidden" : ""}
+            `}>
+              <DashHeader />
+            </div>
+            <div className={`w-full h-full
+              ${pathname === "/" ? "" : "overflow-y-scroll"}
+              `}>
+              {children}
+            </div>
+          </div>
+        </div>
         <Footer />
       </body>
     </html>

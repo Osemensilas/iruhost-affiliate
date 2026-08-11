@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import { ShieldCheck, CreditCard, Headset, Lock, Mail, Eye, EyeOff, ArrowLeft, MailCheck } from "lucide-react";
+import { ShieldCheck, Headset, Lock, Mail, Eye, EyeOff, ArrowLeft, MailCheck } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
