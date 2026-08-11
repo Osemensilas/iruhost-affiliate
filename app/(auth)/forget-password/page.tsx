@@ -83,8 +83,8 @@ const ForgetPassword = () => {
                 </div>
                 <h2 className="text-4xl text-accent text-center font-bold">Reset Your Passwor <br></br> We&lsquo;ve <span className="text-primary">Got You.</span></h2>
                 <p className="text-accent text-base text-center">No worries! Enter your email address and we&rsquo;ll<br></br>send you a code to reset your password.</p>
-                <div className="relative h-62.5 w-62.5">
-                    <Image src="/" className="" fill alt="dashbord" />
+                <div className="relative h-62.5 w-100">
+                    <Image src="/computer-security-with-login-password-padlock.png" className="" fill alt="dashbord" />
                 </div>
                 <div className="h-max w-full flex px-20">
                     <div className="h-max w-[30%] flex items-center justify-center flex-col gap-2">

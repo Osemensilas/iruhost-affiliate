@@ -94,8 +94,8 @@ const Register = () => {
                 </div>
                 <h2 className="text-4xl text-accent text-center font-bold">Join IruHost <br></br><span className="text-primary">Affiliate </span>Program</h2>
                 <p className="text-accent text-base text-center">Create your affliate account and start earning<br></br>commissions by referring IruHost services.</p>
-                <div className="relative h-62.5 w-62.5">
-                    <Image src="/" className="" fill alt="dashbord" />
+                <div className="relative h-62.5 w-100">
+                    <Image src="/computer-security-with-login-password-padlock.png" className="object-fill" fill alt="dashbord" />
                 </div>
                 <div className="h-max w-full flex px-20">
                     <div className="h-max w-[30%] flex items-center justify-center flex-col gap-2">
