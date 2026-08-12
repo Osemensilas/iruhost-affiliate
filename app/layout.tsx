@@ -25,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-full w-screen flex flex-col">
         <Header />
-        <div className={`w-full flex bg-accent
+        <div className={`w-full flex
             ${pathname === "/" ? "h-max" : "h-screen overflow-hidden"}
           `}>
           <div className={`w-2/10 h-screen px-10 py-10 border-r border-grey
@@ -50,8 +50,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             `}>
               <DashHeader />
             </div>
-            <div className={`w-full h-full
-              ${pathname === "/" ? "" : "overflow-y-scroll"}
+            <div className={`w-full 
+              ${pathname === "/" ? "h-max" : "overflow-y-scroll h-full"}
               `}>
               {children}
             </div>

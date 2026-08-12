@@ -160,7 +160,7 @@ const quickLinks = [
 export default function AffiliateDashboard() {
   return (
     <div className="min-h-screen bg-[#f8faf9] mb-20 p-4 sm:p-6 lg:p-8">
-      <div className="mx-auto max-w-[1600px]">
+      <div className="mx-auto max-w-[1600px] mb-20">
 
         {/* Header */}
         <div className="mb-7 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
