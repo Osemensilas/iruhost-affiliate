@@ -29,18 +29,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             ${pathname === "/" ? "h-max" : "h-screen overflow-hidden"}
           `}>
           <div className={`w-2/10 h-screen px-10 py-10 border-r border-grey
-            ${pathname === "/" ? "hidden" : ""}
-            ${pathname === "/login" ? "hidden" : ""}
-            ${pathname === "/register" ? "hidden" : ""}
-            ${pathname === "/forget-password" ? "hidden" : ""}
+            ${pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/forget-password" ? "hidden" : ""}
             `}>
             <SideNav />
           </div>
-          <div className={`h-screen
-            ${pathname === "/" ? "w-full" : "w-8/10"}
-            ${pathname === "/login" ? "w-full" : "w-8/10"}
-            ${pathname === "/register" ? "w-full" : "w-8/10"}
-            ${pathname === "/forget-password" ? "w-full" : "w-8/10"}
+          <div className={`
+            ${pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/forget-password" ? "w-full h-max" : "w-8/10 h-screen"}
             `}>
             <div className={`w-full h-20 border-b border-grey px-5
               ${pathname === "/" ? "hidden" : ""}
