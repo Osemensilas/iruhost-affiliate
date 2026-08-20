@@ -163,16 +163,14 @@ const quickLinks = [
 export default function AffiliateDashboard() {
 
   interface UserData{
-    name: string;
     accountBal: number;
     referrals: number;
     total_earnings: number;
     current_earning: number;
   }
 
-  const [payout, setPayout] = useState(0);
+  const [payout, setPayout] = useState<number>(0);
   const [userData, setUserData] = useState<UserData>({
-      name: '',
       accountBal: 0,
       referrals: 0,
       total_earnings: 0,
@@ -195,6 +193,12 @@ useEffect(() => {
             if (response.data.status === "success"){
                 console.log(response.data.user);
                 setPayout(response.data.user.account.total_earnings - response.data.user.account.balance);
+                setUserData({
+                  accountBal: response.data.user.account.balance,
+                  referrals: response.data.user.account.referrals,
+                  total_earnings: response.data.user.account.total_earnings,
+                  current_earning: response.data.user.account.referrals,
+                });
             }
         } catch (error) {
             if (axios.isAxiosError(error)){
