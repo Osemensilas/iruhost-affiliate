@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Loading from "@/components/general/Loading";
 
 const Register = () => {
 
@@ -23,6 +24,7 @@ const Register = () => {
     const [error, setError] = useState<string>("");
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmVisible, setConfirmVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -56,39 +58,61 @@ const Register = () => {
 
     const formSubmitted = async () => {
 
+        setLoading(true);
+
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         if (!formData.firstname || !formData.lastname || !formData.email || !formData.password || !formData.confirmPassword || !formData.country){
             setError("All fields required");
+            setLoading(false);
+            return;
+        }
+
+        if (!emailValid.test(formData.email)){
+            setError("Invalid email address");
+            setLoading(false);
             return;
         }
 
         if (formData.password !== formData.confirmPassword){
             setError("Password do not match");
+            setLoading(false);
             return;
         }
 
         setError("");
 
-        console.log(formData);
+        const url = "http://127.0.0.1:8000/api/register";
 
-        const url = "https://localhost:8000/login";
+        try{
+            const response = await axios.post(url, formData, {
+                headers: {
+                    "Content-Type" : "application/json"
+                },withCredentials: true
+            });
 
-        const response = await axios.post(url, formData, {
-            headers: {
-                "Content-Type" : "application/json"
-            },withCredentials: true
-        });
+            console.log(response.data);
 
-        console.log(response.data);
+            if (response.data.status === "success"){
 
-        if (response.data === "success"){
-            router.push("/dashboard");
+                localStorage.setItem("token", response.data.token);
+                
+                router.push("/dashboard");
+            }
+            setLoading(false);
+        }catch(error){
+            if (axios.isAxiosError(error)){
+                console.log(error.response?.data.message);
+                setError(error.response?.data.message);
+                setLoading(false);
+            }
         }
     }
 
     return ( 
         <>
         <section className="h-screen w-screen flex">
-            <div className="h-full w-1/2 flex flex-col justify-between items-center py-5">
+            <div className="h-full w-1/2 hidden sm:flex flex-col justify-between items-center py-5">
                 <div className="relative h-10 w-15">
                     <Image src={"/logo.png"} fill alt="logo" className="object-fill" />
                 </div>
@@ -121,8 +145,8 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <div className="h-full w-1/2 bg-accent flex justify-center items-center">
-                <form onSubmit={(e) => e.preventDefault()} className="h-max w-4/5 shadow px-10 py-10">
+            <div className="h-full w-full sm:w-1/2 bg-accent flex justify-center items-center">
+                <form onSubmit={(e) => e.preventDefault()} className="h-max w-full sm:w-4/5 shadow px-4 sm:px-10 py-10">
                     <div className="h-max w-full flex justify-center mb-5">
                         <UserPlus className="h-10 w-10 text-primary" />
                     </div>
@@ -210,7 +234,7 @@ const Register = () => {
                             <label htmlFor="remember" className="text-base cursor-pointer text-grey">Remember Me</label>
                         </div>
                         <div className="h-max w-full">
-                            <button type="submit" onClick={formSubmitted} className="h-max w-full text-background rounded py-3 text-center bg-primary text-base outline-none cursor-pointer">Sign In</button>
+                            <button type="submit" onClick={formSubmitted} className="h-max w-full text-background rounded py-3 flex items-center justify-center text-center bg-primary text-base outline-none cursor-pointer">{loading ? <Loading /> : "Sign Up"}</button>
                         </div>
                         <div className="h-max w-full flex items-center gap-2 text-base text-grey">
                             Already an account? <Link href={"/login"} className="text-primary">Sign In</Link>

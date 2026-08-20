@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import {
   ArrowUpRight,
   BarChart3,
@@ -158,6 +161,49 @@ const quickLinks = [
 ];
 
 export default function AffiliateDashboard() {
+
+  interface UserData{
+    name: string;
+    accountBal: number;
+    referrals: number;
+    total_earnings: number;
+    current_earning: number;
+  }
+
+  const [payout, setPayout] = useState(0);
+  const [userData, setUserData] = useState<UserData>({
+      name: '',
+      accountBal: 0,
+      referrals: 0,
+      total_earnings: 0,
+      current_earning: 0
+  });
+
+useEffect(() => {
+
+    async function getUser(){
+        try {
+            const url = "http://127.0.0.1:8000/api/fetch-user";
+            const token = localStorage.getItem('token');
+
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            if (response.data.status === "success"){
+                console.log(response.data.user);
+                setPayout(response.data.user.account.total_earnings - response.data.user.account.balance);
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)){
+                console.log(error.response);
+            }
+        }
+    }
+    getUser();
+  },[])
   return (
     <div className="min-h-screen bg-[#f8faf9] mb-20 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-[1600px] mb-20">
@@ -191,7 +237,7 @@ export default function AffiliateDashboard() {
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
           <StatCard
             title="Total Referrals"
-            value="1,248"
+            value={Number(userData.referrals).toLocaleString()}
             change="18.6%"
             icon={Users}
             iconStyle="green"
@@ -207,15 +253,15 @@ export default function AffiliateDashboard() {
 
           <StatCard
             title="Total Earnings"
-            value="₦850,000"
+            value={`₦${Number(userData.total_earnings).toLocaleString()}`}
             change="22.4%"
             icon={CircleDollarSign}
             iconStyle="purple"
           />
 
           <StatCard
-            title="Pending Earnings"
-            value="₦120,000"
+            title="Account Balance"
+            value={`₦${Number(userData.accountBal).toLocaleString()}`}
             change="12.7%"
             icon={WalletCards}
             iconStyle="orange"
@@ -223,7 +269,7 @@ export default function AffiliateDashboard() {
 
           <StatCard
             title="Total Payouts"
-            value="₦730,000"
+            value={`₦${[payout]}`}
             change="20.1%"
             icon={BarChart3}
             iconStyle="green"

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
 
@@ -10,7 +10,7 @@ const Header = () => {
 
     return ( 
         <>
-        <header className={`h-20 w-full px-10 flex justify-between items-center
+        <header className={`h-20 w-full sm:px-10 px-4 flex justify-between items-center
             ${pathname === "/" ? "" : "hidden"}
             `}>
             <div className="h-max w-max">

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Loading from "@/components/general/Loading";
 
 const Login = () => {
 
@@ -17,6 +18,7 @@ const Login = () => {
     }
 
     const [error, setError] = useState<string>("");
+    const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
@@ -39,25 +41,45 @@ const Login = () => {
 
     const formSubmitted = async () => {
 
+        setLoading(true);
+
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         if (!formData.email || !formData.password){
             setError("All fields required");
+            setLoading(false);
+            return;
+        }
+
+        if (!emailValid.test(formData.email)){
+            setError("Invalid email address");
+            setLoading(false);
             return;
         }
 
         setError("");
 
-        const url = "https://localhost:8000/login";
+        const url = "http://127.0.0.1:8000/api/login";
 
-        const response = await axios.post(url, formData, {
-            headers: {
-                "Content-Type" : "application/json"
-            },withCredentials: true
-        });
+        try {
+            const response = await axios.post(url, formData, {
+                headers: {
+                    "Content-Type" : "application/json"
+                },withCredentials: true
+            });
 
-        console.log(response.data);
-
-        if (response.data === "success"){
-            router.push("/dashboard");
+            if (response.data.status === "success"){
+                localStorage.setItem("token", response.data.token);
+                    
+                router.push("/dashboard");
+            }
+            setLoading(false);
+        } catch (error) {
+            if (axios.isAxiosError(error)){
+                console.log(error.response?.data.message);
+                setError(error.response?.data.message);
+                setLoading(false);
+            }
         }
     }
 
@@ -105,7 +127,7 @@ const Login = () => {
                     <h2 className="text-center mb-5 font-bold text-3xl">Sign In</h2>
                     <p className="text-base text-center text-grey mb-5">Enter your details to access your<br></br>IruHost Affiliate dashboard.</p>
                     <div className="h-max w-full flex flex-col gap-2">
-                        <div className={`w-full h-max py-2 text-accent bg-danger rounded
+                        <div className={`w-full h-max py-2 text-accent text-center bg-danger rounded
                             ${error ? "" : "hidden"}
                             `}>{error}</div>
                         <div className="h-max w-full relative">
@@ -140,7 +162,7 @@ const Login = () => {
                             <label htmlFor="remember" className="text-base cursor-pointer text-grey">Remember Me</label>
                         </div>
                         <div className="h-max w-full">
-                            <button type="submit" onClick={formSubmitted} className="h-max w-full text-background rounded py-3 text-center bg-primary text-base outline-none cursor-pointer">Sign In</button>
+                            <button type="submit" onClick={formSubmitted} className="h-max w-full text-background rounded py-3 text-center flex items-center justify-center bg-primary text-base outline-none cursor-pointer">{ loading ? <Loading /> : "Sign In"}</button>
                         </div>
                         <div className="h-max w-full flex items-center gap-2 text-base text-grey">
                             Don&#39;t have an account? <Link href={"/register"} className="text-primary">Join Now</Link>
