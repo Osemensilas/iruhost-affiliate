@@ -12,7 +12,7 @@ const SideNav = () => {
     const router = useRouter();
 
     const logout = async () => {
-        const url = "http://127.0.0.1:8000/api/logout";
+        const url = "https://affiliate.iruhost.com/api/logout";
 
         const token = localStorage.getItem('token');
 

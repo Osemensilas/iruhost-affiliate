@@ -11,17 +11,18 @@ const ForgetPassword = () => {
 
     const router = useRouter();
 
-    type User = {
+    interface User {
         email: string;
         password: string;
-        confirmPassword: string
+        confirmPassword: string;
+        code: string;
     }
 
     const [error, setError] = useState<string>("");
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [codeSent, setCodeSent] = useState(true);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<User>({
         email: '',
         password: '',
         confirmPassword: '',

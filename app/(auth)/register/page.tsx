@@ -12,9 +12,9 @@ const Register = () => {
 
     const router = useRouter();
 
-    type User = {
+    interface User {
         firstname: string;
-        lastname: string,
+        lastname: string;
         email: string;
         password: string;
         confirmPassword: string;
@@ -25,7 +25,7 @@ const Register = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmVisible, setConfirmVisible] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<User>({
         firstname: '',
         lastname: '',
         email: '',

@@ -12,7 +12,7 @@ const Login = () => {
 
     const router = useRouter();
 
-    type User = {
+    interface User {
         email: string;
         password: string;
     }
@@ -20,7 +20,7 @@ const Login = () => {
     const [error, setError] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<User>({
         email: '',
         password: ''
     })
@@ -59,7 +59,7 @@ const Login = () => {
 
         setError("");
 
-        const url = "http://127.0.0.1:8000/api/login";
+        const url = "https://affiliate.iruhost.com/api/login";
 
         try {
             const response = await axios.post(url, formData, {

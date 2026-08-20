@@ -20,7 +20,7 @@ const DashHeader = () => {
 
         async function getUser(){
             try {
-                const url = "http://127.0.0.1:8000/api/fetch-user";
+                const url = "https://affiliate.iruhost.com/api/fetch-user";
                 const token = localStorage.getItem('token');
 
                 const response = await axios.get(url, {
