@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Foundation:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sedan:ital@0;1&display=swap');
+@import "tailwindcss";
+
+:root {
+  --accent: #ffffff;
+  --background: #111827;
+  --backgroundLight: #92b2f5;
+  --primary: #D4AF37;
+  --bars: #1A2E66;
+  --text: #000000;
+  --grey: #c0c0c0;
+  --lighterGrey: #eeeded;
+  --danger: #fa0606;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-backgroundLight: var(--backgroundLight);
+  --color-primary: var(--primary);
+  --color-lightPrimary: var(--lightPrimary);
+  --color-grey: var(--grey);
+  --color-text: var(--text);
+  --color-accent: var(--accent);
+  --color-bars: var(--bars);
+  --color-danger: var(--danger);
+}
+
+html,
+body {
+  height: max-content;
+  width: 100vw;
+  overflow-x: hidden;
+  background: var(--background);
+  font-family: "Montserrat", sans-serif;
+}
