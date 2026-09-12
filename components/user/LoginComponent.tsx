@@ -86,7 +86,7 @@ const LoginComponent = () => {
     return ( 
         <>
         <section className="h-screen w-screen flex">
-            <div className="h-full w-1/2 flex flex-col justify-between items-center py-5">
+            <div className="h-full w-1/2 hidden sm:flex flex-col justify-between items-center py-5">
                 <div className="relative h-10 w-15">
                     <Image src={"/logo.png"} fill alt="logo" className="object-fill" />
                 </div>
@@ -119,7 +119,7 @@ const LoginComponent = () => {
                     </div>
                 </div>
             </div>
-            <div className="h-full w-1/2 bg-accent flex justify-center items-center">
+            <div className="h-full sm:w-1/2 w-full bg-accent flex justify-center items-center">
                 <form onSubmit={(e) => e.preventDefault()} className="h-max w-4/5 shadow px-10 py-10">
                     <div className="h-max w-full flex justify-center mb-5">
                         <Lock className="h-10 w-10 text-primary" />
