@@ -58,6 +58,8 @@ const Register = () => {
 
     const formSubmitted = async () => {
 
+        console.log(formData);
+
         setLoading(true);
 
         const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
