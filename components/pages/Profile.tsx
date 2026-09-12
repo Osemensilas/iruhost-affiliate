@@ -1,38 +1,73 @@
 "use client";
 
-import {
-  Camera,
-  Check,
-  ChevronRight,
-  Clock3,
-  Edit3,
-  Eye,
-  EyeOff,
-  Globe2,
-  KeyRound,
-  Landmark,
-  LockKeyhole,
-  Mail,
-  MapPin,
-  Phone,
-  Save,
-  Settings2,
-  ShieldCheck,
-  User,
-  Users,
-  Wallet,
-} from "lucide-react";
+import { Camera, Check, ChevronRight, Clock3, Edit3, Eye, EyeOff, Globe2, KeyRound, Landmark, LockKeyhole, Mail, MapPin, Phone, Save, Settings2, ShieldCheck, User, Users, Wallet,} from "lucide-react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function ProfileContent() {
+
+  interface UserData{
+      name: string;
+      userId: string,
+      memberSince: string,
+      country: string,
+  }
+
+
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [userData, setUserData] = useState<UserData>({
+      name: '',
+      userId: '',
+      memberSince: '',
+      country: '',
+  });
+
+  useEffect(() => {
+    async function getUser(){
+        try {
+            const url = "https://affiliate-backend.iruhost.com/api/fetch-user";
+            const token = localStorage.getItem('token');
+
+            const response = await axios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
+
+            if (response.data.status === "success"){
+                console.log(response.data.user);
+                setUserData({
+                    name: response.data.user.firstname + " " + response.data.user.lastname,
+                    userId: response.data.user.user_id,
+                    memberSince: response.data.created_at,
+                    country: response.data.country
+                });
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)){
+                console.log(error.response);
+            }
+        }
+    }
+
+    getUser();
+  },[])
+
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
 
   return (
     <main className="min-h-screen bg-[#f8faf9] p-4 sm:p-6 lg:p-8">
-      <div className="mx-auto max-w-[1500px]">
+      <div className="mx-auto max-w-375">
 
         {/* ========================================= */}
         {/* PAGE HEADER */}
@@ -98,7 +133,7 @@ export default function ProfileContent() {
                 <div className="flex flex-wrap items-center gap-2">
 
                   <h2 className="text-xl font-black text-slate-950">
-                    Affiliate User
+                    {userData.name}
                   </h2>
 
                   <span className="flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-[10px] font-bold text-green-700">
@@ -109,16 +144,16 @@ export default function ProfileContent() {
                 </div>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  Affiliate ID: <span className="font-semibold text-slate-700">IRU12345</span>
+                  Affiliate ID: <span className="font-semibold text-slate-700">{userData.userId}</span>
                 </p>
 
                 <p className="mt-1 text-xs text-slate-500">
-                  Member since May 15, 2024
+                  Member since {formatDate(userData.memberSince)}
                 </p>
 
                 <p className="mt-1 flex items-center gap-1 text-xs text-slate-500">
                   <MapPin className="h-3.5 w-3.5" />
-                  Nigeria
+                  {userData.country}
                 </p>
 
               </div>
@@ -127,7 +162,7 @@ export default function ProfileContent() {
 
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 xl:min-w-[650px]">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 xl:min-w-162.5">
 
               <ProfileStat
                 icon={<Users className="h-5 w-5" />}
@@ -633,7 +668,7 @@ function ProfileRow({
         {icon}
       </span>
 
-      <span className="w-[100px] shrink-0 text-[10px] font-medium text-slate-500">
+      <span className="w-25 shrink-0 text-[10px] font-medium text-slate-500">
         {label}
       </span>
 
@@ -749,7 +784,7 @@ function PasswordInput({
   return (
     <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 
-      <label className="w-full shrink-0 text-[10px] font-semibold text-slate-600 sm:w-[140px]">
+      <label className="w-full shrink-0 text-[10px] font-semibold text-slate-600 sm:w-35">
         {label}
       </label>
 
