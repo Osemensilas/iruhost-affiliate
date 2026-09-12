@@ -5,6 +5,11 @@ import WhoCanJoin from "@/components/general/Audience";
 import AffiliateBenefits from "@/components/general/Benefit";
 import AffiliateFAQ from "@/components/general/Faq";
 import HowItWorks from "@/components/general/HowItWork";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home Page - IruHost Affiliate Program",
+};
 
 export default function Home() {
   return (
