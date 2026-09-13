@@ -191,7 +191,6 @@ useEffect(() => {
             });
 
             if (response.data.status === "success"){
-                console.log(response.data.user);
                 setPayout(response.data.user.account.total_earnings - response.data.user.account.balance);
                 setUserData({
                   accountBal: response.data.user.account.balance,
