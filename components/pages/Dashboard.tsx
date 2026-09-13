@@ -206,6 +206,21 @@ useEffect(() => {
             }
         }
     }
+
+    async function getReferrals(){
+      const url = "https://affiliate-backend.iruhost.com/api/get-referrals";
+      const token = localStorage.getItem('token');
+
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+
+      console.log(response.data);
+    }
+
+    getReferrals();
     getUser();
   },[])
   return (
