@@ -22,8 +22,7 @@ const SideNav = () => {
                      Authorization: `Bearer ${token}`,
                 }
             });
-
-            console.log(response.data);
+            
             if (response.data.status === "success"){
                 localStorage.clear();
                 localStorage.removeItem('token');
