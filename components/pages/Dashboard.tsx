@@ -170,6 +170,7 @@ export default function AffiliateDashboard() {
   }
 
   const [payout, setPayout] = useState<number>(0);
+  const [recentReferral, setRecentReferral] = useState([]);
   const [userData, setUserData] = useState<UserData>({
       accountBal: 0,
       referrals: 0,
