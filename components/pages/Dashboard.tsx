@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import {
@@ -227,6 +227,11 @@ useEffect(() => {
     getReferrals();
     getUser();
   },[])
+
+  const ReferalLinkClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(e.currentTarget.value);
+  }
+
   return (
     <div className="min-h-screen bg-[#f8faf9] mb-20 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-[1600px] mb-20">
@@ -641,23 +646,17 @@ useEffect(() => {
             </h2>
 
             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-2">
-              {quickLinks.map((link) => {
-                const Icon = link.icon;
-
-                return (
-                  <button
-                    key={link.title}
+              <button onClick={ReferalLinkClicked}
+                    value={referralLink}
                     type="button"
                     className="group flex min-h-26.25 flex-col items-center justify-center rounded-xl bg-green-50 p-3 text-center transition hover:bg-green-100"
                   >
-                    <Icon className="h-7 w-7 text-green-600 transition group-hover:scale-110" />
+                    <Link2 className="h-7 w-7 text-green-600 transition group-hover:scale-110" />
 
                     <span className="mt-3 text-xs font-semibold text-slate-700">
-                      {link.title}
+                      Quick Link
                     </span>
                   </button>
-                );
-              })}
             </div>
           </section>
         </div>
