@@ -538,13 +538,13 @@ useEffect(() => {
                             {referral.firstname?.charAt(0).toUpperCase()}
                           </span>
 
-                          <span className="text-sm font-medium text-slate-700">
+                          <span className="text-sm font-medium text-slate-700 capitalize">
                             {referral.firstname + " " + referral.lastname}
                           </span>
                         </div>
                       </td>
 
-                      <td className="px-5 py-4 text-sm text-slate-600">
+                      <td className="px-5 py-4 text-sm text-slate-600 capitalize">
                         {referral.product}
                       </td>
 
