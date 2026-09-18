@@ -172,6 +172,7 @@ export default function AffiliateDashboard() {
   const [payout, setPayout] = useState<number>(0);
   const [recentReferral, setRecentReferral] = useState([]);
   const [referralLink, setReferalLink] = useState<string>("");
+  const [referralLinkText, setReferalLinkText] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData>({
       accountBal: 0,
       referrals: 0,
@@ -191,8 +192,6 @@ useEffect(() => {
                     Authorization: `Bearer ${token}`,
                 }
             });
-
-            console.log(response.data);
 
             if (response.data.status === "success"){
                 setPayout(response.data.user.account.total_earnings - response.data.user.account.balance);
@@ -229,8 +228,17 @@ useEffect(() => {
   },[])
 
   const ReferalLinkClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e.currentTarget.value);
+    navigator.clipboard.writeText(e.currentTarget.value);
+    setReferalLinkText(true);
   }
+
+  useEffect(() => {
+    if (referralLinkText){
+      setTimeout(() => {
+        setReferalLinkText(false);
+      }, 500);
+    }
+  },[referralLinkText])
 
   return (
     <div className="min-h-screen bg-[#f8faf9] mb-20 p-4 sm:p-6 lg:p-8">
@@ -654,7 +662,9 @@ useEffect(() => {
                     <Link2 className="h-7 w-7 text-green-600 transition group-hover:scale-110" />
 
                     <span className="mt-3 text-xs font-semibold text-slate-700">
-                      Quick Link
+                      {
+                      referralLinkText ? "Copied" : "Referal Link"
+                      }
                     </span>
                   </button>
             </div>
