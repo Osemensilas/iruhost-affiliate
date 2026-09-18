@@ -164,18 +164,43 @@ useEffect(() => {
       const url = "https://affiliate-backend.iruhost.com/api/get-referrals";
       const token = localStorage.getItem('token');
 
-      const response = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
+      try{
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
 
-      console.log(response.data);
-      if (response.data.status === "success"){
-        setRecentReferral(response.data.products);
+        if (response.data.status === "success"){
+          setRecentReferral(response.data.products);
+        }
+      }catch(error){
+        if (axios.isAxiosError(error)){
+          console.log(error.response);
+        }
       }
     }
 
+    async function getReferralHistory(){
+      const url = "https://affiliate-backend.iruhost.com/api/get-referral-history";
+      const token = localStorage.getItem('token');
+
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+
+        console.log(response.data);
+      } catch (error) {
+        if (axios.isAxiosError(error)){
+          console.log(error.response);
+        }
+      }
+    }
+
+    getReferralHistory();
     getReferrals();
     getUser();
   },[])
