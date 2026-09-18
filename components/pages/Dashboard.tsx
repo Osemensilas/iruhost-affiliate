@@ -171,7 +171,7 @@ export default function AffiliateDashboard() {
 
   const [payout, setPayout] = useState<number>(0);
   const [recentReferral, setRecentReferral] = useState([]);
-  const [referralLink, setReferalLink] = useState<string>("https://www.iruhost.com/signup");
+  const [referralLink, setReferalLink] = useState<string>("");
   const [userData, setUserData] = useState<UserData>({
       accountBal: 0,
       referrals: 0,
@@ -202,7 +202,7 @@ useEffect(() => {
                   total_earnings: response.data.user.account.total_earnings,
                   current_earning: response.data.user.account.referrals,
                 });
-                setReferalLink(response.data.user.referral_code);
+                setReferalLink("https://www.iruhost.com/signup?referral_code=" + response.data.user.referral_code);
             }
         } catch (error) {
             if (axios.isAxiosError(error)){
