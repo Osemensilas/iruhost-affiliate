@@ -74,37 +74,6 @@ const breakdownData = [
   },
 ];
 
-const recentReferrals = [
-  {
-    name: "Oluwaseun A.",
-    service: "Web Hosting",
-    date: "May 31, 2024",
-    status: "Paid",
-    letter: "O",
-  },
-  {
-    name: "Blessing E.",
-    service: "Domain",
-    date: "May 30, 2024",
-    status: "Paid",
-    letter: "B",
-  },
-  {
-    name: "Daniel K.",
-    service: "Business Email",
-    date: "May 29, 2024",
-    status: "Pending",
-    letter: "D",
-  },
-  {
-    name: "Aminu M.",
-    service: "Web Hosting",
-    date: "May 28, 2024",
-    status: "Paid",
-    letter: "A",
-  },
-];
-
 const countries = [
   {
     country: "Nigeria",
@@ -133,33 +102,6 @@ const countries = [
   },
 ];
 
-const quickLinks = [
-  {
-    title: "Get Referral Link",
-    icon: Link2,
-  },
-  {
-    title: "Marketing Tools",
-    icon: Megaphone,
-  },
-  {
-    title: "Banners",
-    icon: ImageIcon,
-  },
-  {
-    title: "Reports",
-    icon: BarChart3,
-  },
-  {
-    title: "Payout History",
-    icon: WalletCards,
-  },
-  {
-    title: "Help Center",
-    icon: Headphones,
-  },
-];
-
 export default function AffiliateDashboard() {
 
   interface UserData{
@@ -169,8 +111,16 @@ export default function AffiliateDashboard() {
     current_earning: number;
   }
 
+  interface RecentRefer{
+    firstname: string;
+    lastname: string;
+    created_at: string;
+    product: string;
+    status: string;
+  }
+
   const [payout, setPayout] = useState<number>(0);
-  const [recentReferral, setRecentReferral] = useState([]);
+  const [recentReferral, setRecentReferral] = useState<RecentRefer[]>([]);
   const [referralLink, setReferalLink] = useState<string>("");
   const [referralLinkText, setReferalLinkText] = useState<boolean>(false);
   const [userData, setUserData] = useState<UserData>({
@@ -221,6 +171,9 @@ useEffect(() => {
       });
 
       console.log(response.data);
+      if (response.data.status === "success"){
+        setRecentReferral(response.data.products);
+      }
     }
 
     getReferrals();
@@ -239,6 +192,15 @@ useEffect(() => {
       }, 500);
     }
   },[referralLinkText])
+
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
 
   return (
     <div className="min-h-screen bg-[#f8faf9] mb-20 p-4 sm:p-6 lg:p-8">
@@ -565,35 +527,35 @@ useEffect(() => {
                 </thead>
 
                 <tbody>
-                  {recentReferrals.map((referral) => (
+                  {recentReferral.map((referral) => (
                     <tr
-                      key={referral.name}
+                      key={referral.firstname}
                       className="border-b border-slate-50 last:border-0"
                     >
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
                           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-xs font-bold text-green-700">
-                            {referral.letter}
+                            {referral.firstname?.charAt(0).toUpperCase()}
                           </span>
 
                           <span className="text-sm font-medium text-slate-700">
-                            {referral.name}
+                            {referral.firstname + " " + referral.lastname}
                           </span>
                         </div>
                       </td>
 
                       <td className="px-5 py-4 text-sm text-slate-600">
-                        {referral.service}
+                        {referral.product}
                       </td>
 
                       <td className="px-5 py-4 text-sm text-slate-500">
-                        {referral.date}
+                        {formatDate(referral.created_at)}
                       </td>
 
                       <td className="px-5 py-4">
                         <span
                           className={`rounded-md px-3 py-1.5 text-xs font-semibold ${
-                            referral.status === "Paid"
+                            referral.status === "successful"
                               ? "bg-green-100 text-green-700"
                               : "bg-orange-100 text-orange-700"
                           }`}
