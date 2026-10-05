@@ -665,13 +665,11 @@ useEffect(() => {
 function StatCard({
   title,
   value,
-  change,
   icon: Icon,
   iconStyle,
 }: {
   title: string;
   value: string;
-  change: string;
   icon: React.ElementType;
   iconStyle: "green" | "blue" | "purple" | "orange";
 }) {
@@ -703,10 +701,10 @@ function StatCard({
       </div>
 
       <div className="mt-6 flex items-center gap-2 text-xs">
-        <span className="flex items-center font-bold text-green-600">
+        {/* <span className="flex items-center font-bold text-green-600">
           <ArrowUpRight className="h-4 w-4" />
           {change}
-        </span>
+        </span> */}
 
         <span className="text-slate-500">
           vs Apr 1 – Apr 30
