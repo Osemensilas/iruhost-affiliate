@@ -261,7 +261,6 @@ useEffect(() => {
           <StatCard
             title="Total Referrals"
             value={Number(userData.referrals).toLocaleString()}
-            change="18.6%"
             icon={Users}
             iconStyle="green"
           />
@@ -277,7 +276,6 @@ useEffect(() => {
           <StatCard
             title="Total Earnings"
             value={`₦${Number(userData.total_earnings).toLocaleString()}`}
-            change="22.4%"
             icon={CircleDollarSign}
             iconStyle="purple"
           />
@@ -285,7 +283,6 @@ useEffect(() => {
           <StatCard
             title="Account Balance"
             value={`₦${Number(userData.accountBal).toLocaleString()}`}
-            change="12.7%"
             icon={WalletCards}
             iconStyle="orange"
           />
@@ -293,7 +290,6 @@ useEffect(() => {
           <StatCard
             title="Total Payouts"
             value={`₦${[payout]}`}
-            change="20.1%"
             icon={BarChart3}
             iconStyle="green"
           />
