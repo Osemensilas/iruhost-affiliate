@@ -192,7 +192,26 @@ useEffect(() => {
           }
         });
 
-        console.log(response.data);
+        console.log("Referral History: ", response.data);
+      } catch (error) {
+        if (axios.isAxiosError(error)){
+          console.log(error.response);
+        }
+      }
+    }
+
+    async function getEarnings(){
+      const url = "https://affiliate-backend.iruhost.com/api/get-earnings";
+      const token = localStorage.getItem('token');
+
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+
+        console.log("Earnings: ", response.data);
       } catch (error) {
         if (axios.isAxiosError(error)){
           console.log(error.response);
@@ -203,6 +222,7 @@ useEffect(() => {
     getReferralHistory();
     getReferrals();
     getUser();
+    getEarnings();
   },[])
 
   const ReferalLinkClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
