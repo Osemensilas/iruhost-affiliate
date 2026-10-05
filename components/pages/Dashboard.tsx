@@ -700,16 +700,16 @@ function StatCard({
         </div>
       </div>
 
-      <div className="mt-6 flex items-center gap-2 text-xs">
-        {/* <span className="flex items-center font-bold text-green-600">
+      {/* <div className="mt-6 flex items-center gap-2 text-xs">
+        <span className="flex items-center font-bold text-green-600">
           <ArrowUpRight className="h-4 w-4" />
           {change}
-        </span> */}
+        </span>
 
         <span className="text-slate-500">
           vs Apr 1 – Apr 30
         </span>
-      </div>
+      </div> */}
     </div>
   );
 }
