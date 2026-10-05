@@ -266,13 +266,13 @@ useEffect(() => {
             iconStyle="green"
           />
 
-          <StatCard
+          {/*<StatCard
             title="Paid Referrals"
             value="642"
             change="15.3%"
             icon={Wallet}
             iconStyle="blue"
-          />
+          />*/}
 
           <StatCard
             title="Total Earnings"
